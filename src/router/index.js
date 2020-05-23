@@ -36,7 +36,24 @@ const mainRoutes = {
     { path: '/home', component: _import('common/home'), name: 'home', meta: { title: '首页' } },
     { path: '/theme', component: _import('common/theme'), name: 'theme', meta: { title: '主题' } },
     { path: '/demo-echarts', component: _import('demo/echarts'), name: 'demo-echarts', meta: { title: 'demo-echarts', isTab: true } },
-    { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } }
+    { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } },
+    // 员工资料管理
+
+    {
+      path: '/edit/:id',
+      name: 'EmployeeEdit',
+      component: () => import('@/views/modules/employee/add'),
+      meta: { title: '编辑员工', noCache: true },
+      hidden: true
+    },
+    {
+      path: '/create',
+      name: 'EmployeeCreate',
+      component: () => import('@/views/modules/employee/add'),
+      meta: { title: '添加员工' },
+      hidden: true
+    }
+
   ],
   beforeEnter (to, from, next) {
     let token = Vue.cookie.get('token')
