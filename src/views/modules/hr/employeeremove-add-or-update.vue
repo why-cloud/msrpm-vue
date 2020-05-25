@@ -8,14 +8,28 @@
       <el-input v-model="dataForm.eid" placeholder=""></el-input>
     </el-form-item>
     <el-form-item label="调动后部门" prop="afterDepId">
-      <el-input v-model="dataForm.afterdepid" placeholder="调动后部门"></el-input>
+       <!-- <el-select v-model="dataForm.afterDepId" placeholder="调动后部门">
+          <el-option
+            v-for="item in options"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+      </el-select> -->
+      <el-input v-model="dataForm.afterDepId" placeholder="调动后部门编号"></el-input>
     </el-form-item>
     <el-form-item label="调动后职位" prop="afterJobId">
-      <el-input v-model="dataForm.afterjobid" placeholder="调动后职位"></el-input>
+      <el-input v-model="dataForm.afterJobId" placeholder="调动后职位编号"></el-input>
     </el-form-item>
+
     <el-form-item label="调动日期" prop="removeDate">
-      <el-input v-model="dataForm.removedate" placeholder="调动日期"></el-input>
+      <el-date-picker
+      value-format="yyyy-MM-dd HH:mm:ss" 
+      type="datetime" 
+      v-model="dataForm.removeDate" 
+      placeholder="调动日期"></el-date-picker>
     </el-form-item>
+
     <el-form-item label="调动原因" prop="reason">
       <el-input v-model="dataForm.reason" placeholder="调动原因"></el-input>
     </el-form-item>
@@ -32,10 +46,10 @@
       <el-input v-model="dataForm.gmtModified" placeholder="更新时间"></el-input>
     </el-form-item> -->
     <el-form-item label="调动前部门" prop="beforeDepId">
-      <el-input v-model="dataForm.beforedepid" placeholder="调动前部门"></el-input>
+      <el-input v-model="dataForm.beforeDepId" placeholder="调动前部门编号"></el-input>
     </el-form-item>
     <el-form-item label="调动前职位" prop="beforeJobId">
-      <el-input v-model="dataForm.beforejobid" placeholder="调动前职位"></el-input>
+      <el-input v-model="dataForm.beforeJobId" placeholder="调动前职位编号"></el-input>
     </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -49,20 +63,29 @@
   export default {
     data () {
       return {
+        // pickerOptions: {
+        //   disabledDate (time) {
+        //     return time.getTime() > Date.now()
+        //   }
+        // },
+        depOptions: [],
+        jobOptions: [],
+        value: '',
         visible: false,
         dataForm: {
           id: 0,
           eid: '',
-          afterdepid: '',
-          afterjobid: '',
-          removedate: '',
+          afterDepId: '',
+          // afterDepName: '',
+          afterJobId: '',
+          removeDate: '',
           reason: '',
           remark: '',
           // isDeleted: '',
           // gmtCreate: '',
           // gmtModified: '',
-          beforedepid: '',
-          beforejobid: ''
+          beforeDepId: '',
+          beforeJobId: ''
         },
         dataRule: {
           eid: [
@@ -105,6 +128,22 @@
       init (id) {
         this.dataForm.id = id || 0
         this.visible = true
+        // this.$http({
+        //   url: this.$http.adornUrl(`/hr/employeeremove/list/dep`),
+        //   method: 'get'
+        // }).then(({data}) => {
+        //   console.log(data)
+        //   if (data && data.code === 0) {
+        //     this.options = data.dep
+        //   }
+        // })
+            //  this.$http({
+            //   url: this.$http.adornUrl(`/hr/employeeremove/list/job`),
+            //   method: 'get',
+            //   // params: this.$http.adornParams()
+            // }).then(({data}) => {
+
+            // })
         this.$nextTick(() => {
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
@@ -115,16 +154,16 @@
             }).then(({data}) => {
               if (data && data.code === 0) {
                 this.dataForm.eid = data.employeeremove.eid
-                this.dataForm.afterdepid = data.employeeremove.afterdepid
-                this.dataForm.afterjobid = data.employeeremove.afterjobid
-                this.dataForm.removedate = data.employeeremove.removedate
+                this.dataForm.afterDepId = data.employeeremove.afterDepId
+                this.dataForm.afterJobId = data.employeeremove.afterJobId
+                this.dataForm.removeDate = data.employeeremove.removeDate
                 this.dataForm.reason = data.employeeremove.reason
                 this.dataForm.remark = data.employeeremove.remark
                 // this.dataForm.isDeleted = data.employeeremove.isDeleted
                 // this.dataForm.gmtCreate = data.employeeremove.gmtCreate
                 // this.dataForm.gmtModified = data.employeeremove.gmtModified
-                this.dataForm.beforedepid = data.employeeremove.beforedepid
-                this.dataForm.beforejobid = data.employeeremove.beforejobid
+                this.dataForm.beforeDepId = data.employeeremove.beforeDepId
+                this.dataForm.beforeJobId = data.employeeremove.beforeJobId
               }
             })
           }
@@ -138,7 +177,7 @@
               url: this.$http.adornUrl(`/hr/employeeremove/${!this.dataForm.id ? 'save' : 'update'}`),
               method: 'post',
               data: this.$http.adornData({
-                // 'id': this.dataForm.id || undefined,
+                'id': this.dataForm.id || undefined,
                 'eid': this.dataForm.eid,
                 'afterDepId': this.dataForm.afterDepId,
                 'afterJobId': this.dataForm.afterJobId,
@@ -148,8 +187,8 @@
                 // 'isDeleted': this.dataForm.isDeleted,
                 // 'gmtCreate': this.dataForm.gmtCreate,
                 // 'gmtModified': this.dataForm.gmtModified,
-                'beforedepid': this.dataForm.beforeDepId,
-                'beforejobid': this.dataForm.beforeJobId
+                'beforeDepId': this.dataForm.beforeDepId,
+                'beforeJobId': this.dataForm.beforeJobId
               })
             }).then(({data}) => {
               if (data && data.code === 0) {

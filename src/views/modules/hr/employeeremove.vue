@@ -1,11 +1,11 @@
 <template>
   <div class="mod-config">
     <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
-      <el-form-item>
+      <!-- <el-form-item>
         <el-input v-model="dataForm.key" placeholder="参数名" clearable></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item>
-        <el-button @click="getDataList()">查询</el-button>
+        <!-- <el-button @click="getDataList()">查询</el-button> -->
         <el-button v-if="isAuth('hr:employeeremove:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
         <el-button v-if="isAuth('hr:employeeremove:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
@@ -22,12 +22,12 @@
         align="center"
         width="50">
       </el-table-column>
-      <!-- <el-table-column
-        prop="id"
+      <el-table-column
+        prop="name"
         header-align="center"
         align="center"
         label="员工姓名">
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column
         prop="eid"
         header-align="center"
@@ -35,13 +35,13 @@
         label="员工编号">
       </el-table-column>
       <el-table-column
-        prop="afterDepId"
+        prop="afterDepName"
         header-align="center"
         align="center"
         label="调动后部门">
       </el-table-column>
       <el-table-column
-        prop="afterJobId"
+        prop="afterJobName"
         header-align="center"
         align="center"
         label="调动后职位">
@@ -83,13 +83,13 @@
         label="更新时间">
       </el-table-column> -->
       <el-table-column
-        prop="beforeDepId"
+        prop="beforeDepName"
         header-align="center"
         align="center"
         label="调动前部门">
       </el-table-column>
       <el-table-column
-        prop="beforeJobId"
+        prop="beforeJobName"
         header-align="center"
         align="center"
         label="调动前职位">
