@@ -15,13 +15,20 @@
     </el-form>
     <!-- 表格 -->
     <el-table
+    @selection-change="selectionChangeHandle"
       v-loading="listLoading"
       :data="list"
       element-loading-text="数据加载中"
       border
       fit
-      highlight-current-row>
-
+      highlight-current-row
+     >
+      <el-table-column
+        type="selection"
+        header-align="center"
+        align="center"
+        width="50">
+      </el-table-column>
       <el-table-column
         label="序号"
         width="70"
@@ -30,6 +37,7 @@
           {{ (page - 1) * limit + scope.$index + 1 }}
         </template>
       </el-table-column>
+      <el-table-column prop="id" label="员工编号" width="80" />
       <el-table-column prop="name" label="姓名" width="80" />
       <el-table-column prop="workID" label="工号" />
       <el-table-column prop="gender" label="性别"/>
@@ -75,6 +83,11 @@
       layout="total, prev, pager, next, jumper"
       @current-change="fetchData"
       />
+      <el-form>
+        <el-form-item>
+        <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+      </el-form-item>
+    </el-form>
 
   </div>
 </template>
@@ -85,6 +98,7 @@ export default {
   data () {
     // 定义数据
     return {
+      dataListSelections: [], // 存放删除的数据
       listLoading: true, // 是否显示loading的信息
       list: null, // 数据列表
       total: 0, // 总记录数
@@ -97,6 +111,92 @@ export default {
     this.fetchData()
   },
   methods: {
+    // 多选
+    selectionChangeHandle (val) {
+      console.log(val)
+      this.dataListSelections = val
+    },
+
+    fetchData (page = 1) { // 调用api层获取数据库中的数据
+      console.log('加载列表')
+      this.page = page
+      this.listLoading = true
+      employee.getPageList(this.page, this.limit, this.searchObj).then(response => {
+        if (response.success === true) {
+          this.list = response.data.rows
+          this.total = response.data.total
+          console.log(this.list)
+          console.log(this.total)
+        }
+        this.listLoading = false
+      })
+    },
+    resetData () {
+      this.searchObj = {}
+      this.fetchData()
+    },
+    // 通过ID删除
+    removeDataById (id) {
+    // debugger
+    // console.log(memberId)
+      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        return employee.removeById(id)
+      }).then(() => {
+        this.fetchData()
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch((response) => { // 失败
+        if (response === 'cancel') {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        } else {
+          this.$message({
+            type: 'error',
+            message: '删除失败'
+          })
+        }
+      })
+    },
+        // 通过ID批量删除
+    deleteHandle (id) {
+      var idList = id ? [id] : this.dataListSelections.map(item => {
+        return item.id
+      })
+      console.log(idList)
+      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        return employee.removeByIdList(idList)
+      }).then(() => {
+        this.fetchData()
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch((response) => { // 失败
+        if (response === 'cancel') {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        } else {
+          this.$message({
+            type: 'error',
+            message: '删除失败'
+          })
+        }
+      })
+    },
     workstate: function workstate (row, column) {
       switch (row.stateIId) {
         case 1:return '在职'
@@ -264,55 +364,6 @@ export default {
         default:
           return '未知'
       }
-    },
-
-    fetchData (page = 1) { // 调用api层获取数据库中的数据
-      console.log('加载列表')
-      this.page = page
-      this.listLoading = true
-      employee.getPageList(this.page, this.limit, this.searchObj).then(response => {
-        if (response.success === true) {
-          this.list = response.data.rows
-          this.total = response.data.total
-          console.log(this.list)
-          console.log(this.total)
-        }
-        this.listLoading = false
-      })
-    },
-    resetData () {
-      this.searchObj = {}
-      this.fetchData()
-    },
-    // 通过ID删除
-    removeDataById (id) {
-    // debugger
-    // console.log(memberId)
-      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        return employee.removeById(id)
-      }).then(() => {
-        this.fetchData()
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        })
-      }).catch((response) => { // 失败
-        if (response === 'cancel') {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
-        } else {
-          this.$message({
-            type: 'error',
-            message: '删除失败'
-          })
-        }
-      })
     }
   }
 }
