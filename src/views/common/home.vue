@@ -1,7 +1,21 @@
 <template>
   <div class="mod-home">
     <h3>项目介绍</h3>
-    <ul>
+    <h4>
+            本系统是人事管理系统，它主要实现管理员如何对普通用户进
+
+      行授权，如何插入、删除一个员工的信息，用户如何浏览员工的所
+
+      有信息，以及用户如何查询自己想要的结果，也即是通过输入查询
+
+      条件，显示符合条件的员工记录以及如何显示这个员工的全部信息。
+
+      如何对查询或统计出来的符合条件的记录用报表的形式打印出来，
+
+      窗口打开时的排放顺序，也即是平铺还是重叠 。
+
+    </h4>
+    <!-- <ul>
       <li>renren-fast-vue基于vue、element-ui构建开发，实现<a href="https://gitee.com/renrenio/renren-fast" target="_blank">renren-fast</a>后台管理前端功能，提供一套更优的前端解决方案</li>
       <li>前后端分离，通过token进行数据交互，可独立部署</li>
       <li>主题定制，通过scss变量统一一站式定制</li>
@@ -18,11 +32,11 @@
       <li>代码生成器：<a href="https://gitee.com/renrenio/renren-generator" target="_blank">https://gitee.com/renrenio/renren-generator</a></li>
       <li>如需关注项目最新动态，请Watch、Star项目，同时也是对项目最好的支持</li>
     </ul>
-    <h3>官方QQ群</h3>
-    <ul>
+    <h3>官方QQ群</h3> -->
+    <!-- <ul>
       <li>高级群：324780204(大牛云集，跟大牛学习新技能)</li>
       <li>普通群：145799952(学习交流，互相解答各种疑问)</li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 

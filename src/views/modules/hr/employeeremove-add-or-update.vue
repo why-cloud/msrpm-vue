@@ -8,18 +8,26 @@
       <el-input v-model="dataForm.eid" placeholder=""></el-input>
     </el-form-item>
     <el-form-item label="调动后部门" prop="afterDepId">
-       <!-- <el-select v-model="dataForm.afterDepId" placeholder="调动后部门">
+       <el-select v-model="dataForm.afterDepId" placeholder="调动后部门">
           <el-option
-            v-for="item in options"
+            v-for="item in depOptions"
             :key="item.id"
             :label="item.name"
             :value="item.id">
           </el-option>
-      </el-select> -->
-      <el-input v-model="dataForm.afterDepId" placeholder="调动后部门编号"></el-input>
+      </el-select>
+      <!-- <el-input v-model="dataForm.afterDepId" placeholder="调动后部门编号"></el-input> -->
     </el-form-item>
     <el-form-item label="调动后职位" prop="afterJobId">
-      <el-input v-model="dataForm.afterJobId" placeholder="调动后职位编号"></el-input>
+       <el-select v-model="dataForm.afterJobId" placeholder="调动后部门">
+          <el-option
+            v-for="item in jobOptions"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+      </el-select>
+      <!-- <el-input v-model="dataForm.afterJobId" placeholder="调动后职位编号"></el-input> -->
     </el-form-item>
 
     <el-form-item label="调动日期" prop="removeDate">
@@ -46,10 +54,26 @@
       <el-input v-model="dataForm.gmtModified" placeholder="更新时间"></el-input>
     </el-form-item> -->
     <el-form-item label="调动前部门" prop="beforeDepId">
-      <el-input v-model="dataForm.beforeDepId" placeholder="调动前部门编号"></el-input>
+            <el-select v-model="dataForm.beforeDepId" placeholder="调动前部门">
+          <el-option
+            v-for="item in depOptions"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+      </el-select>
+      <!-- <el-input v-model="dataForm.beforeDepId" placeholder="调动前部门编号"></el-input> -->
     </el-form-item>
     <el-form-item label="调动前职位" prop="beforeJobId">
-      <el-input v-model="dataForm.beforeJobId" placeholder="调动前职位编号"></el-input>
+       <el-select v-model="dataForm.beforeJobId" placeholder="调动后部门">
+          <el-option
+            v-for="item in jobOptions"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+      </el-select>
+      <!-- <el-input v-model="dataForm.beforeJobId" placeholder="调动前职位编号"></el-input> -->
     </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -128,22 +152,20 @@
       init (id) {
         this.dataForm.id = id || 0
         this.visible = true
-        // this.$http({
-        //   url: this.$http.adornUrl(`/hr/employeeremove/list/dep`),
-        //   method: 'get'
-        // }).then(({data}) => {
-        //   console.log(data)
-        //   if (data && data.code === 0) {
-        //     this.options = data.dep
-        //   }
-        // })
-            //  this.$http({
-            //   url: this.$http.adornUrl(`/hr/employeeremove/list/job`),
-            //   method: 'get',
-            //   // params: this.$http.adornParams()
-            // }).then(({data}) => {
-
-            // })
+        // 初始化department
+        this.$http({
+          url: this.$http.adornUrl(`/hr/employeeremove/deps`),
+          method: 'get'
+        }).then(({data}) => {
+          this.depOptions = data.dep
+        })
+        // 初始化joblevel
+        this.$http({
+          url: this.$http.adornUrl(`/hr/employeeremove/jobs`),
+          method: 'get'
+        }).then(({data}) => {
+          this.jobOptions = data.job
+        })
         this.$nextTick(() => {
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
