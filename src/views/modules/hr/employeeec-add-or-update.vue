@@ -7,20 +7,24 @@
     <el-form-item label="员工编号" prop="eid">
       <el-input v-model="dataForm.eid" placeholder="员工编号"></el-input>
     </el-form-item>
-    <el-form-item label="所属部门" prop="departmentId">
-      <el-input v-model="dataForm.departmentid" placeholder="所属部门"></el-input>
+    <el-form-item label="所属部门编号" prop="departmentId">
+      <el-input v-model="dataForm.departmentId" placeholder="所属部门编号"></el-input>
     </el-form-item>
     <el-form-item label="奖罚日期" prop="ecDate">
-      <el-input v-model="dataForm.ecdate" placeholder="奖罚日期"></el-input>
+      <el-date-picker 
+      value-format="yyyy-MM-dd HH:mm:ss" 
+      type="datetime" 
+      v-model="dataForm.ecDate" 
+      placeholder="奖罚日期"></el-date-picker>
     </el-form-item>
     <el-form-item label="奖罚原因" prop="ecReason">
-      <el-input v-model="dataForm.ecreason" placeholder="奖罚原因"></el-input>
+      <el-input v-model="dataForm.ecReason" placeholder="奖罚原因"></el-input>
     </el-form-item>
     <el-form-item label="奖罚分" prop="ecPoint">
-      <el-input v-model="dataForm.ecpoint" placeholder="奖罚分"></el-input>
+      <el-input v-model="dataForm.ecPoint" placeholder="奖罚分"></el-input>
     </el-form-item>
     <el-form-item label="奖罚类别，0：奖，1：罚" prop="ecType">
-      <el-input v-model="dataForm.ectype" placeholder="奖罚类别，0：奖，1：罚"></el-input>
+      <el-input v-model="dataForm.ecType" placeholder="奖罚类别，0：奖，1：罚"></el-input>
     </el-form-item>
     <el-form-item label="备注" prop="remark">
       <el-input v-model="dataForm.remark" placeholder="备注"></el-input>
@@ -50,33 +54,33 @@
         dataForm: {
           id: 0,
           eid: '',
-          departmentid: '',
-          ecdate: '',
-          ecreason: '',
-          ecpoint: '',
-          ectype: '',
-          remark: '',
-          isDeleted: '',
-          gmtCreate: '',
-          gmtModified: ''
+          departmentId: '',
+          ecDate: '',
+          ecReason: '',
+          ecPoint: '',
+          ecType: '',
+          remark: ''
+          // isDeleted: '',
+          // gmtCreate: '',
+          // gmtModified: ''
         },
         dataRule: {
           eid: [
             { required: true, message: '员工编号不能为空', trigger: 'blur' }
           ],
-          departmentid: [
+          departmentId: [
             { required: true, message: '所属部门不能为空', trigger: 'blur' }
           ],
-          ecdate: [
+          ecDate: [
             { required: true, message: '奖罚日期不能为空', trigger: 'blur' }
           ],
-          ecreason: [
+          ecReason: [
             { required: true, message: '奖罚原因不能为空', trigger: 'blur' }
           ],
-          ecpoint: [
+          ecPoint: [
             { required: true, message: '奖罚分不能为空', trigger: 'blur' }
           ],
-          ectype: [
+          ecType: [
             { required: true, message: '奖罚类别，0：奖，1：罚不能为空', trigger: 'blur' }
           ],
           remark: [
@@ -108,11 +112,11 @@
             }).then(({data}) => {
               if (data && data.code === 0) {
                 this.dataForm.eid = data.employeeec.eid
-                this.dataForm.departmentid = data.employeeec.departmentId
-                this.dataForm.ecdate = data.employeeec.ecDate
-                this.dataForm.ecreason = data.employeeec.ecReason
-                this.dataForm.ecpoint = data.employeeec.ecPoint
-                this.dataForm.ectype = data.employeeec.ecType
+                this.dataForm.departmentId = data.employeeec.departmentId
+                this.dataForm.ecDate = data.employeeec.ecDate
+                this.dataForm.ecReason = data.employeeec.ecReason
+                this.dataForm.ecPoint = data.employeeec.ecPoint
+                this.dataForm.ecType = data.employeeec.ecType
                 this.dataForm.remark = data.employeeec.remark
                 // this.dataForm.isDeleted = data.employeeec.isDeleted
                 // this.dataForm.gmtCreate = data.employeeec.gmtCreate
@@ -132,11 +136,11 @@
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
                 'eid': this.dataForm.eid,
-                'departmentId': this.dataForm.departmentid,
-                'ecDate': this.dataForm.ecdate,
-                'ecReason': this.dataForm.ecreason,
-                'ecPoint': this.dataForm.ecpoint,
-                'ecType': this.dataForm.ectype,
+                'departmentId': this.dataForm.departmentId,
+                'ecDate': this.dataForm.ecDate,
+                'ecReason': this.dataForm.ecReason,
+                'ecPoint': this.dataForm.ecPoint,
+                'ecType': this.dataForm.ecType,
                 'remark': this.dataForm.remark
                 // 'isDeleted': this.dataForm.isDeleted,
                 // 'gmtCreate': this.dataForm.gmtCreate,

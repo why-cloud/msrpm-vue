@@ -7,17 +7,21 @@
     <el-form-item label="员工编号" prop="eid">
       <el-input v-model="dataForm.eid" placeholder="员工编号"></el-input>
     </el-form-item>
-    <el-form-item label="所属部门" prop="departmentid">
-      <el-input v-model="dataForm.departmentid" placeholder="所属部门"></el-input>
+    <el-form-item label="所属部门编号" prop="departmentid">
+      <el-input v-model="dataForm.departmentId" placeholder="所属部门编号"></el-input>
     </el-form-item>
     <el-form-item label="培训日期" prop="traindate">
-      <el-input v-model="dataForm.traindate" placeholder="培训日期"></el-input>
+      <el-date-picker
+      value-format="yyyy-MM-dd HH:mm:ss" 
+      type="datetime" 
+      v-model="dataForm.trainDate" 
+      placeholder="培训日期"></el-date-picker>
     </el-form-item>
     <el-form-item label="培训内容" prop="traincontent">
-      <el-input v-model="dataForm.traincontent" placeholder="培训内容"></el-input>
+      <el-input v-model="dataForm.trainContent" placeholder="培训内容"></el-input>
     </el-form-item>
     <el-form-item label="培训结果" prop="trainresult">
-      <el-input v-model="dataForm.trainresult" placeholder="培训结果"></el-input>
+      <el-input v-model="dataForm.trainResult" placeholder="培训结果"></el-input>
     </el-form-item>
     <el-form-item label="备注" prop="remark">
       <el-input v-model="dataForm.remark" placeholder="备注"></el-input>
@@ -47,14 +51,14 @@
         dataForm: {
           id: 0,
           eid: '',
-          departmentid: '',
-          traindate: '',
-          traincontent: '',
-          trainresult: '',
-          remark: '',
-          isDeleted: '',
-          gmtCreate: '',
-          gmtModified: ''
+          departmentId: '',
+          trainDate: '',
+          trainContent: '',
+          trainResult: '',
+          remark: ''
+          // isDeleted: '',
+          // gmtCreate: '',
+          // gmtModified: ''
         },
         dataRule: {
           eid: [

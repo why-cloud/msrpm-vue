@@ -7,6 +7,9 @@
     <el-form-item label="员工编号" prop="eid">
       <el-input v-model="dataForm.eid" placeholder="员工编号"></el-input>
     </el-form-item>
+     <!-- <el-form-item label="员工姓名" prop="name">
+      <el-input v-model="dataForm.name" placeholder="员工姓名"></el-input>
+    </el-form-item> -->
     <el-form-item label="本月天数" prop="daysMonth">
       <el-input v-model="dataForm.daysMonth" placeholder="本月天数"></el-input>
     </el-form-item>
@@ -50,6 +53,7 @@
         dataForm: {
           id: 0,
           eid: '',
+         // name: '',
           daysMonth: '',
           daysHolidays: '',
           daysDuty: '',
@@ -64,6 +68,9 @@
           eid: [
             { required: true, message: '员工编号不能为空', trigger: 'blur' }
           ],
+          // name: [
+          //   { required: true, message: '员工姓名不能为空', trigger: 'blur' }
+          // ],
           daysMonth: [
             { required: true, message: '本月天数不能为空', trigger: 'blur' }
           ],
@@ -108,6 +115,7 @@
             }).then(({data}) => {
               if (data && data.code === 0) {
                 this.dataForm.eid = data.employcheck.eid
+                // this.dataForm.name = data.employcheck.name
                 this.dataForm.daysMonth = data.employcheck.daysMonth
                 this.dataForm.daysHolidays = data.employcheck.daysHolidays
                 this.dataForm.daysDuty = data.employcheck.daysDuty
@@ -132,6 +140,7 @@
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
                 'eid': this.dataForm.eid,
+                // 'name': this.dataForm.name,
                 'daysMonth': this.dataForm.daysMonth,
                 'daysHolidays': this.dataForm.daysHolidays,
                 'daysDuty': this.dataForm.daysDuty,

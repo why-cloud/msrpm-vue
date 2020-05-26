@@ -22,12 +22,12 @@
         align="center"
         width="50">
       </el-table-column>
-      <!-- <el-table-column
+      <el-table-column
         prop="name"
         header-align="center"
         align="center"
         label="员工姓名">
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column
         prop="eid"
         header-align="center"
