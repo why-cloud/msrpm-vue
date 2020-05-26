@@ -1,6 +1,21 @@
 import request from '@/utils/request'
 const apiName = '/ei/employee'
 export default{
+  // 删除
+  removeById (id) {
+    return request({
+      url: `${apiName}/${id}`,
+      method: 'delete'
+    })
+  },
+  // 批量删除
+  removeByIdList (idList) {
+    return request({
+      url: `${apiName}/${idList}`,
+      method: 'post',
+      data: idList
+    })
+  },
     // 查询所有员工
   getList () {
     return request({
@@ -73,13 +88,7 @@ export default{
       params: searchObj
     })
   },
-  // 删除
-  removeById (id) {
-    return request({
-      url: `${apiName}/${id}`,
-      method: 'delete'
-    })
-  },
+
   // 新增
   save (employee) {
     return request({
