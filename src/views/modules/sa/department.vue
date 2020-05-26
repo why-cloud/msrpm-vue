@@ -8,7 +8,7 @@
 <script>
   // 引入基本模板
 import echarts from 'echarts'
-import ei from '@/api/employee/employee'
+import ei from '@/api/sa/ei'
 
 export default {
     name: 'DataCount',
