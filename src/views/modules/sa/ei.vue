@@ -108,7 +108,7 @@ export default {
             },
             series: [
               {
-                name: '访问来源',
+                name: '人数',
                 type: 'pie',
                 radius: '150px',
                 data: data
