@@ -34,12 +34,12 @@
         align="center"
         label="员工编号">
       </el-table-column>
-      <!-- <el-table-column
-        prop="departmentId"
+      <el-table-column
+        prop="depName"
         header-align="center"
         align="center"
         label="所属部门">
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column
         prop="trainDate"
         header-align="center"
@@ -183,7 +183,8 @@
         var ids = id ? [id] : this.dataListSelections.map(item => {
           return item.id
         })
-        this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
+        // 对[id=${ids.join(',')}]
+        this.$confirm(`确定进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -193,6 +194,7 @@
             method: 'post',
             data: this.$http.adornData(ids, false)
           }).then(({data}) => {
+            console.log('shuxin' + data)
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',

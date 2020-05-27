@@ -7,8 +7,16 @@
     <el-form-item label="员工编号" prop="eid">
       <el-input v-model="dataForm.eid" placeholder="员工编号"></el-input>
     </el-form-item>
-    <el-form-item label="所属部门编号" prop="departmentId">
-      <el-input v-model="dataForm.departmentId" placeholder="所属部门编号"></el-input>
+    <el-form-item label="所属部门" prop="departmentId">
+           <el-select v-model="dataForm.departmentId" placeholder="所属部门">
+          <el-option
+            v-for="item in depOptions"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+      </el-select>
+      <!-- <el-input v-model="dataForm.departmentId" placeholder="所属部门"></el-input> -->
     </el-form-item>
     <el-form-item label="奖罚日期" prop="ecDate">
       <el-date-picker 
@@ -23,8 +31,8 @@
     <el-form-item label="奖罚分" prop="ecPoint">
       <el-input v-model="dataForm.ecPoint" placeholder="奖罚分"></el-input>
     </el-form-item>
-    <el-form-item label="奖罚类别，0：奖，1：罚" prop="ecType">
-      <el-input v-model="dataForm.ecType" placeholder="奖罚类别，0：奖，1：罚"></el-input>
+    <el-form-item label="奖罚类别(0：奖，1：罚)" prop="ecType">
+      <el-input v-model="dataForm.ecType" placeholder="奖罚类别(0：奖，1：罚)"></el-input>
     </el-form-item>
     <el-form-item label="备注" prop="remark">
       <el-input v-model="dataForm.remark" placeholder="备注"></el-input>
@@ -50,6 +58,8 @@
   export default {
     data () {
       return {
+        depOptions: [],
+        value: '',
         visible: false,
         dataForm: {
           id: 0,
@@ -102,6 +112,13 @@
       init (id) {
         this.dataForm.id = id || 0
         this.visible = true
+        // 初始化department
+        this.$http({
+          url: this.$http.adornUrl(`/hr/employeeremove/deps`),
+          method: 'get'
+        }).then(({data}) => {
+          this.depOptions = data.dep
+        })
         this.$nextTick(() => {
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
