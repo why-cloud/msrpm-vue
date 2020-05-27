@@ -35,8 +35,9 @@ const mainRoutes = {
     // 提示: 如需要通过iframe嵌套展示内容, 但不通过tab打开, 请自行创建组件使用iframe处理!
     { path: '/home', component: _import('common/home'), name: 'home', meta: { title: '首页' } },
     { path: '/theme', component: _import('common/theme'), name: 'theme', meta: { title: '主题' } },
-    // { path: '/demo-echarts', component: _import('demo/echarts'), name: 'demo-echarts', meta: { title: 'demo-echarts', isTab: true } },
-    // { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } },
+    { path: '/demo-echarts', component: _import('demo/echarts'), name: 'demo-echarts', meta: { title: 'demo-echarts', isTab: true } },
+    { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } },
+    { path: '/temperature/temperature', component: _import('modules/temperature/temperature'), name: 'temperature', meta: { title: '体温管理', isTab: true } },
     // 员工资料管理
 
     {
@@ -51,6 +52,20 @@ const mainRoutes = {
       name: 'EmployeeCreate',
       component: () => import('@/views/modules/employee/add'),
       meta: { title: '添加员工' },
+      hidden: true
+    },
+    {
+      path: '/temperature-add/:id',
+      name: 'TemperatureEdit',
+      component: () => import('@/views/modules/temperature/add/'),
+      meta: { title: '编辑体温', noCache: true },
+      hidden: true
+    },
+    {
+      path: '/temperature/add/',
+      name: 'TemperatureCreate',
+      component: () => import('@/views/modules/temperature/add/'),
+      meta: { title: '添加体温' },
       hidden: true
     }
 

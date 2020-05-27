@@ -42,7 +42,7 @@
         </el-select>
   </el-form-item>
   <el-form-item>
-        <el-button :disabled="saveBtnDisabled" type="primary" @click="saveOrUpdate">保存</el-button>
+        <el-button :disabled="saveBtnDisabled" type="primary" @click="updateData">保存</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -78,15 +78,6 @@ export default {
     this.init()
   },
   methods: {
-    saveOrUpdate () {
-      this.saveBtnDisabled = true
-      if (this.temperature.id) {
-        this.updateData()
-      } else {
-        this.saveData()
-      }
-      // this.updateData()
-    },
     init () {
       if (this.$route.params && this.$route.params.id) {
         const id = this.$route.params.id
@@ -98,21 +89,21 @@ export default {
       }
     },
     // 保存
-    saveData () {
-      temperature.save(this.temperature).then(response => {
-        return this.$message({
-          type: 'success',
-          message: '成功!'
-        })
-      }).then(response => {
-        this.$router.push({ path: '/temperature/temperature' })
-      }).catch((response) => {
-        this.$message({
-          type: 'error',
-          message: '保存失败'
-        })
-      })
-    },
+    // saveData () {
+    //   this.saveBtnDisabled = true
+    //   temperature.save(this.temperature).then(response => {     //     return this.$message({
+    //       type: 'success',
+    //       message: '成功!'
+    //     })
+    //   }).then(response => {
+    //     this.$router.push({ path: '/temperature/temperature' })
+    //   }).catch((response) => {
+    //     this.$message({
+    //       type: 'error',
+    //       message: '保存失败'
+    //     })
+    //   })
+    // },
 
     // 根据id查询记录
     fetchDataById (id) {

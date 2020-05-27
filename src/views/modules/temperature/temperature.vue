@@ -33,7 +33,7 @@
         </template> -->
       
 
-      <el-table-column prop="gmtCreate" label="添加时间" width="200" align="center"/>
+      <el-table-column prop="gmtModified" label="添加时间" width="200" align="center"/>
 
       <el-table-column label="操作" width="230" align="center">
         <template slot-scope="scope">
@@ -90,7 +90,6 @@ export default {
         this.listLoading = false
       })
     },
-
     // 根据id删除
     removeDataById (id) {
     // debugger
