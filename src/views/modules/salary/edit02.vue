@@ -19,23 +19,50 @@
              <el-input-number v-model="salary.bonus" :min="0" controls-position="right"/>
           </el-form-item>
           
-          <el-form-item label="启用时间">
-             <el-input-number v-model="salary.createDate" :min="0" controls-position="right"/>
-          </el-form-item>
+          <!-- <el-form-item label="启用时间"> -->
+             <!-- <el-input-number v-model="salary.createDate" :min="0" controls-position="right"/> -->
+            
+<!--         <el-date-picker
+          v-model="salary.createDate"
+          type="datetime"
+          placeholder="选择启用时间"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          default-time="00:00:00"
+        />
+      
+          </el-form-item> -->
 
           <el-form-item label="养老金">
-             <el-input-number label="比率" v-model="salary.pensionPer" :min="0" controls-position="right"/>
-             <el-input-number label="基数" v-model="salary.pensionBase" :min="0" controls-position="right"/>
+        
+          <el-form-item label="比率">
+            <el-input-number  v-model="salary.pensionPer" :min="0" controls-position="right"/>
+          </el-form-item>
+          <el-form-item label="基数">
+            <el-input-number label="基数" v-model="salary.pensionBase" :min="0" controls-position="right"/>
+          </el-form-item>
+             
           </el-form-item>
           
          <el-form-item label="医疗保险">
-             <el-input-number label="比率" v-model="salary.medicalPer" :min="0" controls-position="right"/>
-             <el-input-number label="基数" v-model="salary.medicalBase" :min="0" controls-position="right"/>
+            <el-form-item label="比率">
+              <el-input-number label="比率" v-model="salary.medicalPer" :min="0" controls-position="right"/>
+            </el-form-item>
+             
+              <el-form-item label="基数">
+                <el-input-number label="基数" v-model="salary.medicalBase" :min="0" controls-position="right"/>
+              </el-form-item>
+            
           </el-form-item>
 
           <el-form-item label="公积金">
-             <el-input-number label="比率" v-model="salary.accumulationFundPer" :min="0" controls-position="right"/>
-             <el-input-number label="基数" v-model="salary.accumulationFundBase" :min="0" controls-position="right"/>
+            <el-form-item label="比率">
+              <el-input-number label="比率" v-model="salary.accumulationFundPer" :min="0" controls-position="right"/>
+            </el-form-item>
+             
+             <el-form-item label="基数">
+                <el-input-number label="基数" v-model="salary.accumulationFundBase" :min="0" controls-position="right"/>
+              </el-form-item>
+             
           </el-form-item>
          
 
@@ -168,7 +195,7 @@ export default {
         // console.log(response)
            this.$message({
              type: 'error',
-             message: '保存失败'
+             message: '修改失败'
            })
          })
        }

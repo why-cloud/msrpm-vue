@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <el-form label-width="120px">
-         <el-form-item label="ID">
+         <!-- <el-form-item label="ID">
         <el-input-number v-model="resume.id" />
-      </el-form-item>
+      </el-form-item> -->
         <el-form-item label="姓名">
         <el-input v-model="resume.rname" />
       </el-form-item>
@@ -30,7 +30,7 @@
       <el-form-item label="应聘职位">
         <el-select v-model="resume.appliPosid" clearable placeholder="请选择">
           <el-option :value="29" label="技术总监"/>
-          <el-option :value="30" label="运营总监"/>
+          <el-option :value="30" label="主管"/>
           <el-option :value="31" label="市场总监"/>
           <el-option :value="33" label="研发工程师"/>
           <el-option :value="30" label="运维工程师"/>

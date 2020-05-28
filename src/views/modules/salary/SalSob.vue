@@ -3,7 +3,7 @@
     
     
     
-    <router-link :to="{path:'/create'}">
+    <router-link :to="{path:'/Salarycreate'}">
     <el-button icon="el-icon-plus" type="primary" >添加工资账套</el-button>
     </router-link> 
     <!-- <el-button icon="el-icon-refresh" type="success" ></el-button> -->
@@ -36,7 +36,7 @@
                 <el-table-column width="70" prop="trafficSalary" label="交通补助"></el-table-column>
                 <el-table-column width="70" prop="lunchSalary" label="午餐补助"></el-table-column>
                 <el-table-column width="70" prop="bonus" label="奖金"></el-table-column>
-                <el-table-column width="100" prop="createDate" label="启用时间"></el-table-column>
+                <!-- <el-table-column width="100" prop="createDate" label="启用时间"></el-table-column> -->
                 <el-table-column label="养老金" align="center">
                     <el-table-column width="70" prop="pensionPer" label="比率"></el-table-column>
                     <el-table-column width="70" prop="pensionBase" label="基数"></el-table-column>
@@ -51,7 +51,7 @@
                 </el-table-column>
                 <el-table-column label="操作" >
                     <template slot-scope="scope">
-                      <router-link :to="'/edit/'+scope.row.id">
+                      <router-link :to="'/edit02/'+scope.row.id">
                     <el-button type="primary" size="mini" icon="el-icon-edit">编辑</el-button>
                       </router-link>
                         

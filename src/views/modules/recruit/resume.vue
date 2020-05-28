@@ -10,7 +10,7 @@
       <el-form-item>
         <el-select v-model="searchObj.appliPosid" clearable placeholder="应聘职位">
           <el-option :value="29" label="技术总监"/>
-          <el-option :value="30" label="运营总监"/>
+          <el-option :value="30" label="主管"/>
           <el-option :value="31" label="市场总监"/>
           <el-option :value="33" label="研发工程师"/>
           <el-option :value="34" label="运维工程师"/>
@@ -40,7 +40,7 @@
       <el-button type="primary" icon="el-icon-search" @click="fetchData()">查询</el-button>
       <el-button type="default" @click="resetData()">清空</el-button>
       
-          <router-link :to="{path:'/create'}">
+          <router-link :to="{path:'/ResumeCreate'}">
             <el-button type="primary" icon="el-icon-edit">新增</el-button>
           </router-link>  
 
@@ -74,7 +74,7 @@
       <el-table-column prop="age" label="年龄" width="80" />
       <el-table-column prop="phone" label="电话" width="80" />
 
-      <el-table-column prop="positionName" label="应聘职位" width="80">
+      <el-table-column prop="position.name" label="应聘职位" width="80">
         <!-- <template slot-scope="scope">
           {{ scope.row.appliPosid.name}}
         </template> -->

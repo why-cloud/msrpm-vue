@@ -7,15 +7,14 @@
      
       <el-form-item>
         
-         <!-- <el-input  style="width: 350px;margin-right: 10px" v-model="name" placeholder="请输入员工姓名进行搜索，可以直接回车搜索..."/> -->
-          <el-input  style="width: 350px;margin-right: 10px"  placeholder="请输入员工姓名进行搜索，可以直接回车搜索..."/>
+         <el-input  style="width: 350px;margin-right: 10px" v-model="searchObj.name" placeholder="请输入员工姓名进行搜索，可以直接回车搜索..."/>
+          
       </el-form-item>
       
 
-      <!-- <el-button type="primary" icon="el-icon-search" @click="getByName(name)">查询</el-button>
-      <el-button type="default" @click="resetData()">清空</el-button>       -->
-<el-button type="primary" icon="el-icon-search" >查询</el-button>
-      <el-button type="default" >清空</el-button>
+      <el-button type="primary" icon="el-icon-search" @click="fetchData()">查询</el-button>
+      <el-button type="default" @click="resetData()">清空</el-button>      
+
 
     </el-form>
 
@@ -95,6 +94,11 @@ export default {
   },
 
   methods: {
+
+    resetData () {
+      this.searchObj = {}
+      this.fetchData()
+    },
 
     fetchData (page = 1) { // 调用api层获取数据库中的数据
       console.log('加载列表')

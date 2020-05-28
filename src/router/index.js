@@ -38,6 +38,49 @@ const mainRoutes = {
     { path: '/demo-echarts', component: _import('demo/echarts'), name: 'demo-echarts', meta: { title: 'demo-echarts', isTab: true } },
     { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } },
     { path: '/temperature/temperature', component: _import('modules/temperature/temperature'), name: 'temperature', meta: { title: '体温管理', isTab: true } },
+    { path: '/salary/SalSob', component: _import('modules/salary/SalSob'), name: '账套管理', meta: { title: '账套管理', isTab: true } },
+    { path: '/salary/SalSobCfg', component: _import('modules/salary/SalSobCfg'), name: '员工账套', meta: { title: '员工账套', isTab: true } },
+    { path: '/recruit/resume', component: _import('modules/recruit/resume'), name: 'resume', meta: { title: '简历管理', isTab: true } },
+    { path: '/recruit/audition', component: _import('modules/recruit/audition'), name: 'audition', meta: { title: '面试安排', isTab: true } },
+    // 招聘管理
+    {
+      path: '/edit/:id',
+      name: 'ResumeEdit',
+      component: () => import('@/views/modules/recruit/resumeform'),
+      meta: { title: '修改简历', noCache: true },
+      hidden: true
+    },
+    {
+      path: '/ResumeCreate',
+      name: 'ResumeCreate',
+      component: () => import('@/views/modules/recruit/resumeformadd'),
+      meta: { title: '添加简历' },
+      hidden: true
+    },
+    // 薪资管理
+    {
+      path: 'edit01/:id',
+      name: 'EmpSalaryEdit',
+      component: () => import('@/views/modules/salary/edit01'),
+      meta: { title: '编辑账套', noCache: true },
+      hidden: true
+    },
+
+    {
+      path: 'edit02/:id',
+      name: 'SalaryEdit',
+      component: () => import('@/views/modules/salary/edit02'),
+      meta: { title: '编辑账套', noCache: true },
+      hidden: true
+    },
+
+    {
+      path: '/SalaryCreate',
+      name: 'SalaryCreate',
+      component: () => import('@/views/modules/salary/edit02'),
+      meta: { title: '添加账套', noCache: true },
+      hidden: true
+    },
     // 员工资料管理
 
     {
@@ -54,6 +97,7 @@ const mainRoutes = {
       meta: { title: '添加员工' },
       hidden: true
     },
+    // 体温管理
     {
       path: '/temperature-add/:id',
       name: 'TemperatureEdit',

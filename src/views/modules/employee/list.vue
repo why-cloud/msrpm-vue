@@ -12,6 +12,13 @@
 
       <el-button type="primary" icon="el-icon-search" @click="fetchData()">查询</el-button>
       <el-button type="default" @click="resetData()">清空</el-button>
+
+    </el-form>
+  
+    <el-form >
+      <el-form-item label="">
+        <el-button type="primary" size="" icon="el-icon-export" @click="exportData()">导出员工资料</el-button>
+      </el-form-item>
     </el-form>
     <!-- 表格 -->
     <el-table
@@ -116,7 +123,33 @@ export default {
       console.log(val)
       this.dataListSelections = val
     },
-
+    exportData () {
+      this.$confirm('此操作将导出员工资料列表, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        return employee.export()
+      }).then(() => {
+        this.fetchData()
+        this.$message({
+          type: 'success',
+          message: '导出成功!'
+        })
+      }).catch((response) => { // 失败
+        if (response === 'cancel') {
+          this.$message({
+            type: 'info',
+            message: '已取消导出'
+          })
+        } else {
+          this.$message({
+            type: 'error',
+            message: '导出失败'
+          })
+        }
+      })
+    },
     fetchData (page = 1) { // 调用api层获取数据库中的数据
       console.log('加载列表')
       this.page = page
@@ -171,7 +204,7 @@ export default {
         return item.id
       })
       console.log(idList)
-      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除选中记录, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -181,18 +214,18 @@ export default {
         this.fetchData()
         this.$message({
           type: 'success',
-          message: '删除成功!'
+          message: '批量删除成功!'
         })
       }).catch((response) => { // 失败
         if (response === 'cancel') {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: '已取消批量删除'
           })
         } else {
           this.$message({
             type: 'error',
-            message: '删除失败'
+            message: '批量删除失败'
           })
         }
       })

@@ -1,7 +1,14 @@
 import request from '@/utils/request'
 const apiName = '/ei/employee'
 export default{
+  export () {
+    return request({
+      url: `${apiName}/export`,
+      method: 'get'
+    })
+  },
   // 删除
+
   removeById (id) {
     return request({
       url: `${apiName}/${id}`,

@@ -5,9 +5,9 @@
         <el-dialog :visible.sync="dialogAuditionFormVisible" title="添加面试安排">
 
       <el-form :model="audition" label-width="120px">
-          <el-form-item label="ID">
+          <!-- <el-form-item label="ID">
         <el-input-number v-model="audition.id" />
-      </el-form-item>
+      </el-form-item> -->
         <el-form-item label="姓名">
           <el-input v-model="audition.name"/>
         </el-form-item>
@@ -48,7 +48,57 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAuditionFormVisible = false">取 消</el-button>
-        <el-button :disabled="saveBtnDisabled" type="primary" @click="saveOrUpdate">确 定</el-button>
+        <el-button :disabled="saveBtnDisabled" type="primary" @click="saveData">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog :visible.sync="dialogEditFormVisible" title="修改面试安排">
+
+      <el-form :model="audition" label-width="120px">
+          <!-- <el-form-item label="ID">
+        <el-input-number v-model="audition.id" />
+      </el-form-item> -->
+        <el-form-item label="姓名">
+          <el-input v-model="audition.name"/>
+        </el-form-item>
+         <el-form-item label="面试时间">
+        <el-date-picker
+          v-model="audition.auditionTime"
+          type="datetime"
+          placeholder="选择面试时间"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          default-time="00:00:00"
+        />
+      </el-form-item>
+        <el-form-item label="面试职位">
+          <el-select v-model="audition.appliPosid" clearable placeholder="请选择">
+          <el-option :value="29" label="技术总监"/>
+          <el-option :value="30" label="运营总监"/>
+          <el-option :value="31" label="市场总监"/>
+          <el-option :value="33" label="研发工程师"/>
+          <el-option :value="30" label="运维工程师"/>
+          <el-option :value="30" label="Java研发经理"/>
+        </el-select>
+        </el-form-item>
+
+        <el-form-item label="面试伦次">
+        <el-select v-model="audition.auditionNum" clearable placeholder="请选择">
+          <el-option v-for="item in numOptions" :key="item.value" :value="item.value" :label="item.label"/>
+         </el-select>
+      </el-form-item>
+
+        <el-form-item label="面试官">
+          <el-input v-model="audition.auditionPer" :min="0" controls-position="right"/>
+        </el-form-item>
+        <el-form-item label="面试结果">
+        <el-select v-model="audition.result" clearable placeholder="请选择">
+          <el-option v-for="item in resOptions" :key="item.value" :value="item.value" :label="item.label"/>
+         </el-select>
+      </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogEditFormVisible = false">取 消</el-button>
+        <el-button :disabled="saveBtnDisabled" type="primary" @click="updateData">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -128,6 +178,7 @@ export default {
         {value: '不合格', label: '不合格'}
       ],
      // auditionId: '',
+      dialogEditFormVisible: false,
       dialogAuditionFormVisible: false,
       saveBtnDisabled: false,
       listLoading: true, // 是否显示loading信息
@@ -151,17 +202,18 @@ export default {
     console.log('created')
   },
   methods: {
-    saveOrUpdate () {
-      this.saveBtnDisabled = true
-      if (!this.audition.id) {
-        this.saveData()
-      } else {
-        this.updateData()
-      }
-    },
+    // saveOrUpdate () {
+    //   this.saveBtnDisabled = true
+    //   if (!this.audition.id) {
+    //     this.saveData()
+    //   } else {
+    //     this.updateData()
+    //   }
+    // },
     saveData () {
       // this.init()
-      this.dialogAuditionFormVisible = true
+      this.saveBtnDisabled = true
+      // this.dialogAuditionFormVisible = true
       audition.save(this.audition).then(response => {
         this.$message({
           type: 'success',
@@ -176,6 +228,7 @@ export default {
       })
     },
     updateData () {
+      this.saveBtnDisabled = true
       audition.updateById(this.audition).then(response => {
         this.$message({
           type: 'success',
@@ -223,7 +276,7 @@ export default {
     // },
 
     editAudition (id) {
-      this.dialogAuditionFormVisible = true
+      this.dialogEditFormVisible = true
       audition.getById(id).then(response => {
         this.audition = response.data.audition
       }).catch((response) => {
@@ -234,6 +287,7 @@ export default {
       })
     },
     helpSave () {
+      this.dialogEditFormVisible = false
       this.dialogAuditionFormVisible = false// 如果保存成功则关闭对话框
       this.fetchData() // 刷新列表
       this.audition.id = 0

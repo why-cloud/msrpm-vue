@@ -6,11 +6,19 @@ const api_name = '/es/employee'
 
 export default {
 
-  getByName (employee) {
+  // getByName (employee) {
+  //   return request({
+  //     url: `${api_name}/employee-info/${employee.name}`,
+  //     method: 'get',
+  //     params: employee
+  //   })
+  // },
+
+  getName (page, limit, searchObj) {
     return request({
-      url: `${api_name}/employee-info/${employee.name}`,
+      url: `${api_name}/${page}/${limit}`,
       method: 'get',
-      params: employee
+      params: searchObj
     })
   }
 
