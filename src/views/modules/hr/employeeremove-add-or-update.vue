@@ -18,7 +18,7 @@
       </el-select>
       <!-- <el-input v-model="dataForm.afterDepId" placeholder="调动后部门编号"></el-input> -->
     </el-form-item>
-    <el-form-item label="调动后职位" prop="afterJobId">
+    <el-form-item label="调动后职称" prop="afterJobId">
        <el-select v-model="dataForm.afterJobId" placeholder="调动后部门">
           <el-option
             v-for="item in jobOptions"
@@ -54,17 +54,17 @@
       <el-input v-model="dataForm.gmtModified" placeholder="更新时间"></el-input>
     </el-form-item> -->
     <el-form-item label="调动前部门" prop="beforeDepId">
-            <el-select v-model="dataForm.beforeDepId" placeholder="调动前部门">
+        <el-select v-model="dataForm.beforeDepId" placeholder="调动前部门">
           <el-option
             v-for="item in depOptions"
             :key="item.id"
             :label="item.name"
             :value="item.id">
-          </el-option>
+         </el-option>
       </el-select>
       <!-- <el-input v-model="dataForm.beforeDepId" placeholder="调动前部门编号"></el-input> -->
     </el-form-item>
-    <el-form-item label="调动前职位" prop="beforeJobId">
+    <el-form-item label="调动前职称" prop="beforeJobId">
        <el-select v-model="dataForm.beforeJobId" placeholder="调动后部门">
           <el-option
             v-for="item in jobOptions"

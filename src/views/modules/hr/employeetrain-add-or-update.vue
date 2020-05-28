@@ -7,8 +7,16 @@
     <el-form-item label="员工编号" prop="eid">
       <el-input v-model="dataForm.eid" placeholder="员工编号"></el-input>
     </el-form-item>
-    <el-form-item label="所属部门编号" prop="departmentid">
-      <el-input v-model="dataForm.departmentId" placeholder="所属部门编号"></el-input>
+    <el-form-item label="所属部门" prop="departmentId">
+       <el-select v-model="dataForm.departmentId" placeholder="所属部门">
+          <el-option
+            v-for="item in depOptions"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+      </el-select>
+      <!-- <el-input v-model="dataForm.departmentId" placeholder="所属部门编号"></el-input> -->
     </el-form-item>
     <el-form-item label="培训日期" prop="traindate">
       <el-date-picker
@@ -47,11 +55,14 @@
   export default {
     data () {
       return {
+        depOptions: [],
+        value: '',
         visible: false,
         dataForm: {
           id: 0,
           eid: '',
           departmentId: '',
+          // depName: '',
           trainDate: '',
           trainContent: '',
           trainResult: '',
@@ -95,6 +106,14 @@
       init (id) {
         this.dataForm.id = id || 0
         this.visible = true
+        // 初始化department
+        this.$http({
+          url: this.$http.adornUrl(`/hr/employeeremove/deps`),
+          method: 'get'
+        }).then(({data}) => {
+          this.depOptions = data.dep
+        })
+
         this.$nextTick(() => {
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
@@ -106,6 +125,7 @@
               if (data && data.code === 0) {
                 this.dataForm.eid = data.employeetrain.eid
                 this.dataForm.departmentId = data.employeetrain.departmentId
+                // this.dataForm.depName = data.employeetrain.depName
                 this.dataForm.trainDate = data.employeetrain.trainDate
                 this.dataForm.trainContent = data.employeetrain.trainContent
                 this.dataForm.trainResult = data.employeetrain.trainResult
@@ -129,6 +149,7 @@
                 'id': this.dataForm.id || undefined,
                 'eid': this.dataForm.eid,
                 'departmentId': this.dataForm.departmentId,
+                // 'depName': this.dataForm.depName,
                 'trainDate': this.dataForm.trainDate,
                 'trainContent': this.dataForm.trainContent,
                 'trainResult': this.dataForm.trainResult,
