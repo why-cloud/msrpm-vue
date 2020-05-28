@@ -34,12 +34,12 @@
         align="center"
         label="员工编号">
       </el-table-column>
-      <!-- <el-table-column
-        prop="departmentId"
+      <el-table-column
+        prop="depName"
         header-align="center"
         align="center"
         label="所属部门">
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column
         prop="ecDate"
         header-align="center"
@@ -58,11 +58,12 @@
         align="center"
         label="奖罚分">
       </el-table-column>
+      <!-- ，0：奖，1：罚 -->
       <el-table-column
-        prop="ecType"
+        prop="type"
         header-align="center"
         align="center"
-        label="奖罚类别，0：奖，1：罚">
+        label="奖罚类别">
       </el-table-column>
       <el-table-column
         prop="remark"
@@ -189,7 +190,8 @@
         var ids = id ? [id] : this.dataListSelections.map(item => {
           return item.id
         })
-        this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
+        // 对[id=${ids.join(',')}]
+        this.$confirm(`确定进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
