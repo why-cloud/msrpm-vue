@@ -82,11 +82,17 @@ const mainRoutes = {
       hidden: true
     },
     // 员工资料管理
-
+    {
+      path: '/list',
+      name: 'Employeelist',
+      component: () => import('@/views/modules/employee/list'),
+      meta: { title: '员工列表' },
+      hidden: true
+    },
     {
       path: '/edit/:id',
       name: 'EmployeeEdit',
-      component: () => import('@/views/modules/employee/add'),
+      component: () => import('@/views/modules/employee/edit'),
       meta: { title: '编辑员工', noCache: true },
       hidden: true
     },

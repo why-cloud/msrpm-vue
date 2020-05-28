@@ -1,10 +1,17 @@
 import request from '@/utils/request'
 const apiName = '/ei/employee'
 export default{
+  import () {
+    return request({
+      url: `${apiName}/addEmp`,
+      method: 'post'
+    })
+  },
   export () {
     return request({
       url: `${apiName}/export`,
       method: 'get'
+
     })
   },
   // 删除

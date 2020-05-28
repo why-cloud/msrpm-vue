@@ -3,32 +3,51 @@
     <!--查询表单-->
     <el-form :inline="true" class="demo-form-inline">
       <el-form-item>
-        <el-input v-model="searchObj.name" placeholder="员工姓名"/>
+        <el-input size="small" v-model="searchObj.name" placeholder="员工姓名"/>
       </el-form-item>
 
       <el-form-item>
-        <el-input v-model="searchObj.WorkID" placeholder="员工工号"/>
+        <el-input size="small" v-model="searchObj.WorkID" placeholder="员工工号"/>
       </el-form-item>
 
-      <el-button type="primary" icon="el-icon-search" @click="fetchData()">查询</el-button>
-      <el-button type="default" @click="resetData()">清空</el-button>
-
+      <el-button type="primary" size="small" icon="el-icon-search" @click="fetchData()">查询</el-button>
+      <el-button type="default" size="small" @click="resetData()">清空</el-button>
+      <el-button type="primary" size="small" icon="el-icon-download" @click="exportData()">下载员工资料</el-button>
     </el-form>
   
     <el-form >
-      <el-form-item label="">
-        <el-button type="primary" size="" icon="el-icon-export" @click="exportData()">导出员工资料</el-button>
+      <el-form-item>
+        <el-upload
+          ref="upload"
+          :auto-upload="false"
+          :on-success="fileUploadSuccess"
+          :on-error="fileUploadError"
+          :disabled="importBtnDisabled"
+          :limit="1"
+          :action="BASE_API+'/ei/employee/addEmp'"
+          name="file"
+          accept="application/vnd.ms-excel">
+          <el-button slot="trigger" size="small" type="primary">选取Excel文件导入员工数据</el-button>
+          <el-button
+            icon="el-icon-upload"
+            :loading="loading"
+            style="margin-left: 10px;"
+            size="small"
+            type="success"
+            @click="submitUpload">{{ fileUploadBtnText }}</el-button>
+        </el-upload>
       </el-form-item>
     </el-form>
     <!-- 表格 -->
     <el-table
+    height="500"
+    ref="multipleTable"
+    style="width: 100%"
     @selection-change="selectionChangeHandle"
-      v-loading="listLoading"
-      :data="list"
-      element-loading-text="数据加载中"
-      border
-      fit
-      highlight-current-row
+    v-loading="listLoading"
+    :data="list"
+    element-loading-text="数据加载中"
+    border
      >
       <el-table-column
         type="selection"
@@ -38,41 +57,41 @@
       </el-table-column>
       <el-table-column
         label="序号"
-        width="70"
+        width="50"
         align="center">
         <template slot-scope="scope">
           {{ (page - 1) * limit + scope.$index + 1 }}
         </template>
       </el-table-column>
-      <el-table-column prop="id" label="员工编号" width="80" />
-      <el-table-column prop="name" label="姓名" width="80" />
-      <el-table-column prop="workID" label="工号" />
-      <el-table-column prop="gender" label="性别"/>
-      <el-table-column :formatter="department" prop="departmentId" label="所属部门"/>
-      <el-table-column prop="birthday" label="出生日期" width="160" />
-      <el-table-column prop="idCard" label="身份证号码" width="160" />
-      <el-table-column prop="wedlock" label="婚姻状况"/>
-      <el-table-column prop="nativePlace" label="籍贯"/>
-      <el-table-column :formatter="nation" prop="nationId" label="民族"/>
-      <el-table-column :formatter="politic" prop="politicId" label="政治面貌"/>
-      <el-table-column prop="email" label="邮箱"/>
-      <el-table-column prop="phone" label="电话号码"/>
-      <el-table-column prop="address" label="联系地址"/>
-      <el-table-column :formatter="jobLevel" prop="jobLevelId" label="职称"/>
-      <el-table-column :formatter="position" prop="posId" label="职位"/>
-      <el-table-column :formatter="engageForm" prop="formId" label="聘用形式"/>
-      <el-table-column :formatter="topdegree" prop="degreeId" label="最高学历"/>
-      <el-table-column prop="specialty" label="所属专业"/>
-      <el-table-column prop="school" label="毕业院校"/>
-      <el-table-column prop="beginDate" label="入职日期"/>
-      <el-table-column :formatter="workstate" prop="stateIId" label="在职状态"/>
-      <el-table-column prop="contractTerm" label="合同期限"/>
-      <el-table-column prop="conversionTime" label="转正日期"/>
-      <el-table-column prop="notWorkDate" label="离职日期"/>
-      <el-table-column prop="beginContract" label="合同起始日期"/>
-      <el-table-column prop="endContract" label="合同终止日期"/>
-      <el-table-column prop="workAge" label="工龄"/>
-      <el-table-column label="操作" width="200" align="center">
+      <el-table-column prop="id" label="员工编号" width="50" align="center" />
+      <el-table-column prop="name" label="姓名" width="80" align="center"/>
+      <el-table-column prop="workID" label="工号" width="90" align="center"/>
+      <el-table-column prop="gender" label="性别" width="50" align="center"/>
+      <el-table-column :formatter="department" prop="departmentId" label="所属部门" align="center"/>
+      <el-table-column prop="birthday" label="出生日期" width="100" align="center"/>
+      <el-table-column prop="idCard" label="身份证号码" width="170" align="center"/>
+      <el-table-column prop="wedlock" label="婚姻状况" width="50" align="center"/>
+      <el-table-column prop="nativePlace" label="籍贯" width="50" align="center"/>
+      <el-table-column :formatter="nation" prop="nationId" label="民族" width="50" align="center"/>
+      <el-table-column :formatter="politic" prop="politicId" label="政治面貌" align="center"/>
+      <el-table-column prop="email" label="邮箱" width="140" align="center"/>
+      <el-table-column prop="phone" label="电话号码" width="120" align="center"/>
+      <el-table-column prop="address" label="联系地址" align="center"/>
+      <el-table-column :formatter="jobLevel" prop="jobLevelId" label="职称" width="100" align="center"/>
+      <el-table-column :formatter="position" prop="posId" label="职位" width="100" align="center"/>
+      <el-table-column :formatter="engageForm" prop="formId" label="聘用形式" align="center"/>
+      <el-table-column :formatter="topdegree" prop="degreeId" label="最高学历" width="50" align="center"/>
+      <el-table-column prop="specialty" label="所属专业" align="center"/>
+      <el-table-column prop="school" label="毕业院校" align="center"/>
+      <el-table-column prop="beginDate" label="入职日期" width="100" align="center"/>
+      <el-table-column :formatter="workstate" prop="stateIId" label="在职状态" width="50" align="center"/>
+      <el-table-column prop="contractTerm" label="合同期限" width="50" align="center"/>
+      <el-table-column prop="conversionTime" label="转正日期" width="100" align="center"/>
+      <el-table-column prop="notWorkDate" label="离职日期" width="100" align="center"/>
+      <el-table-column prop="beginContract" label="合同起始日期" width="100" align="center"/>
+      <el-table-column prop="endContract" label="合同终止日期" width="100" align="center"/>
+      <el-table-column prop="workAge" label="工龄" width="50" align="center"/>
+      <el-table-column fixed="right" label="操作" width="200" align="center">
         <template slot-scope="scope">
           <router-link :to="'/edit/'+scope.row.id">
             <el-button type="primary" size="mini" icon="el-icon-edit">修改</el-button>
@@ -82,20 +101,18 @@
       </el-table-column>
     </el-table>
     <!-- 分页 -->
-    <el-pagination
+      <div style="margin-top: 20px">
+        <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button @click="toggleSelection()">取消选择</el-button>
+      </div>
+<el-pagination
       :current-page="page"
       :page-size="limit"
       :total="total"
-      style="padding: 30px 0; text-align: center;"
+      style="padding: 20px 0; text-align: center;"
       layout="total, prev, pager, next, jumper"
       @current-change="fetchData"
       />
-      <el-form>
-        <el-form-item>
-        <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
-      </el-form-item>
-    </el-form>
-
   </div>
 </template>
 <script>
@@ -105,12 +122,18 @@ export default {
   data () {
     // 定义数据
     return {
+      loading: false,
+      BASE_API: process.env.BASE_API, // 接口API地址
+      fileUploadBtnText: '上传到服务器', // 按钮文字
+      importBtnDisabled: false, // 按钮是否禁用,
+      importDataBtnText: 'Excel导入',
+      importDataBtnIcon: 'el-icon-upload2',
       dataListSelections: [], // 存放删除的数据
       listLoading: true, // 是否显示loading的信息
       list: null, // 数据列表
       total: 0, // 总记录数
       page: 1, // 页码
-      limit: 5, // 每页记录数
+      limit: 10, // 每页记录数
       searchObj: {} // 查询条件
     }
   },
@@ -118,13 +141,17 @@ export default {
     this.fetchData()
   },
   methods: {
-    // 多选
-    selectionChangeHandle (val) {
-      console.log(val)
-      this.dataListSelections = val
+    toggleSelection (rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row)
+        })
+      } else {
+        this.$refs.multipleTable.clearSelection()
+      }
     },
     exportData () {
-      this.$confirm('此操作将导出员工资料列表, 是否继续?', '提示', {
+      this.$confirm('将导出员工资料列表, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -134,7 +161,7 @@ export default {
         this.fetchData()
         this.$message({
           type: 'success',
-          message: '导出成功!'
+          message: '成功导出资料到桌面!'
         })
       }).catch((response) => { // 失败
         if (response === 'cancel') {
@@ -149,6 +176,40 @@ export default {
           })
         }
       })
+    },
+    submitUpload () {
+      this.fileUploadBtnText = '正在上传'
+      this.importBtnDisabled = true
+      this.loading = true
+      this.$refs.upload.submit()
+    },
+
+    fileUploadSuccess (response) {
+      if (response.success === true) {
+        this.fileUploadBtnText = '导入成功'
+        this.loading = false
+        this.$message({
+          type: 'success',
+          message: response.message
+        })
+      }
+    },
+
+    fileUploadError (response) {
+      this.fileUploadBtnText = '导入失败'
+      this.loading = false
+      this.$message({
+        type: 'error',
+        message: '导入失败'
+      })
+    },
+    clickFile () {
+      this.$refs.file.dispatchEvent(new MouseEvent('click'))
+    },
+    // 多选
+    selectionChangeHandle (val) {
+      console.log(val)
+      this.dataListSelections = val
     },
     fetchData (page = 1) { // 调用api层获取数据库中的数据
       console.log('加载列表')
